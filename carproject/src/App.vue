@@ -11,7 +11,15 @@ export default {
   name: 'App',
   components: {
 
-  }
+  },
+    data(){
+      return {
+          name:null
+      }
+    },
+    mounted() {
+     return  this.$store.getters.getName = this.name
+    }
 }
 </script>
 
