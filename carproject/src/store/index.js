@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import modals from '../store/'
+import modals from '../store/modals/modals.js'
 
 Vue.use(Vuex)
 
