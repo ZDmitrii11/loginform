@@ -1,7 +1,7 @@
 <template>
-    <div class="container">
-        <h1><span>Please Login : </span></h1>
-        <div class="loginContainer">
+    <div class="my-container">
+        <h3><span>Please Login : </span></h3>
+        <div class="my-loginContainer">
             <form @submit.prevent="">
 
                 <div class="inputClass">
@@ -15,10 +15,12 @@
 
 
                 </div>
-                <button class="hello" @click="Login">Login</button>
-
+                <button class="my-hello" @click="Login">Login</button>
 
             </form>
+            <div v-show="isActive" class="error">
+                <h3>Password or Mail Incorect</h3>
+            </div>
         </div>
 
     </div>
@@ -26,37 +28,43 @@
 
 <script>
     import {mapGetters} from 'vuex'
+
     export default {
         name: "login",
-        data(){
+        data() {
             return {
-                emailInput:'',
-                passwordInp:''
+                emailInput: '',
+                passwordInp: '',
+                isActive:false
             }
         },
-        computed:{
+        computed: {
             ...mapGetters(['getToken'])
         },
-        methods:{
-            Login(){
+        methods: {
+            Login() {
                 this.$store.commit('currentUser', [this.emailInput, this.passwordInp])
-                this.$store.dispatch('getToken', ['https://reqres.in/api/login', this.emailInput, this.passwordInp])
+                this.$store.dispatch('Token', ['https://reqres.in/api/login', this.emailInput, this.passwordInp])
+                if (localStorage.getItem('token')){
+                    this.$router.push('/main')
+                    this.isActive = false
 
+                }
+                else {
+                    this.isActive = true
+                }
 
+            },
 
+        },
 
-
-
-
-
-            }
-            }
-        }
+    }
 
 </script>
-
+r
 <style scoped>
-    .container {
+
+    .my-container {
         width: 250px;
         height: 300px;
         display: flex;
@@ -69,6 +77,7 @@
         text-align: center;
 
     }
+
     .inputClass {
         color: white;
         display: flex;
@@ -78,15 +87,16 @@
 
         align-self: center;
     }
-    .loginContainer {
+
+    .my-loginContainer {
         width: auto;
         height: auto;
         margin: auto;
         border-radius: 25px;
 
 
-
     }
+
     button {
         position: relative;
         background-color: #4CAF50;
@@ -126,7 +136,14 @@
         opacity: 1;
         transition: 0s
     }
-    .container > form > button {
+    .error {
+        background-color: black;
+        color: red;
+        margin: auto;
+        padding: 2rem;
+    }
+
+    .my-container > form > button {
         width: 150px;
         margin: 25px;
         padding: 2rem;
